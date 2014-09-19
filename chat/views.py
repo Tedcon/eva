@@ -12,7 +12,7 @@ def home(req):
     c = RequestContext(req,locals())
     return HttpResponse(t.render(c))
 
-def chat(req):
+def api_chat(req):
     word = req.POST.get("word")
     res = main_deal(word)
 
