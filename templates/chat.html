@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <textarea id="chat_box" rows="3" readonly="readonly" style="resize:none;"></testarea>
+</div>
+
+<div>
+    <input id="input_box" value="" />
+    <button id="sent_btn" class="btn btn-primary">发送</button>
+</div>
+
+<script type="text/javascript">
+    $("#sent_btn").click(function(){
+        var $word = $("#input_box").val();
+        $("#chat_box").value += $word + "\n";
+        $.post("/api/chat/")
+            {
+                <!--chat_session_id:$c_s_id  #todo-->
+                word: $word
+            },
+            function(res){
+                $("#chat_box").value += $res + "\n";
+            }
+    });
+
+</script>
+{% endblock %}
