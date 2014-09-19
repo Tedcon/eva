@@ -5,31 +5,18 @@ import datetime
 
 def common(word_list):
     turn_list = {}
-    time_list = Pertain.objects.filter(pertain="time")
     turn_list["ask"] = 0
+    pertain = Pertain.objects.all()
     for word in word_list:
-        if word in time_list:
-            turn_list["time"] = word
-            continue
-        if word in ask_list:
-            turn_list["ask"] = 1
-            continue
-        if turn_list.has_key("who"):
-            continue
-        else :
-            turn_list["who"] = word
-        if turn_list.has_key("name"):
-            continue
+        p = pertain.objects.filter(word=word)[0]
+        if p:
+            if p.pertain:
+                ps = pertain.objects.filter(word=p.pertain) #找到同义词
+                turn_list[ps.wordtype] = word
         else:
-            turn_list["name"] = word
-        if turn_list.has_key("value"):
-            continue
-        else:
-            turn_list["value"] = word
-        if turn_list.has_key("more"):
-            break
-        else:
-            turn_list["more"] = word
+            thistype = ask(p)
+            turn_list[thistype] = word
+
     return turn_list
 
 def easy_split(word):
@@ -80,3 +67,10 @@ def auto_chat(word_dict):
         fact = facts[0]
         return fact
 
+def ask(word):
+    pass
+def main_deal(long_word):
+    word_list = easy_split(long_word)
+    word_dict = common(word_list)
+    res = auto_chat(word_dict)
+    return res

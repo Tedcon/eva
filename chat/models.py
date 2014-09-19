@@ -10,7 +10,8 @@ class Log(models.Model):
 
 class Pertain(models.Model):
     word = models.CharField(max_length=20)
-    pertain = models.CharField(max_length=10)
+    pertain = models.CharField(max_length=20)
+    wordtype = models.CharField(max_length=10)
 
 class Fact(models.Model):
     time = models.CharField(max_length=20)
